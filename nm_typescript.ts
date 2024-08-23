@@ -138,7 +138,7 @@ async function sendMessage(message: Uint8Array): Promise<void> {
 }
 
 try {
-  await sendMessage(encodeMessage([{ dirname, filename, url }, ...args]));
+  // await sendMessage(encodeMessage([{ dirname, filename, url }, ...args]));
   for await (const message of getMessage()) {
     await sendMessage(message);
   }
