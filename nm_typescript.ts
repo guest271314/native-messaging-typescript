@@ -55,7 +55,7 @@ interface ArrayBuffer {
 interface ArrayBufferConstructor {
   new (byteLength: number, options?: { maxByteLength?: number }): ArrayBuffer;
 }
-
+// Source JavaScript: https://github.com/guest271314/NativeMessagingHosts/blob/main/nm_host.js
 // Convert JavaScript to TypeScript, no obvious equivalent with tsc
 // https://www.codeconvert.ai/javascript-to-typescript-converter
 const runtime: string = navigator.userAgent;
