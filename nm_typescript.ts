@@ -7,25 +7,12 @@
   guest271314, 7-28-2024
 */
 
-/*
-declare let readable: NodeJS.ReadStream & {
-    fd: 0;
-} | ReadableStream<Uint8Array>, writable: WritableStream<Uint8Array>, exit: () => void;
-declare function encodeMessage(message: any): Uint8Array;
-declare function getMessage(): AsyncGenerator<Uint8Array>;
-declare function sendMessage(message: Uint8Array): Promise<void>;
-export { encodeMessage, exit, getMessage, readable, sendMessage, writable, };
-*/
-
 // Source JavaScript: https://github.com/guest271314/NativeMessagingHosts/blob/main/nm_host.js
 //
 // Convert JavaScript to TypeScript, no obvious equivalent with tsc
 // https://www.codeconvert.ai/javascript-to-typescript-converter
 //
 // Resizable ArrayBuffer supported by tsc Version 5.7.0-dev.20241019
-/**
-* /// <reference types="https://raw.githubusercontent.com/microsoft/TypeScript/2ac4cb78d6930302eb0a55d07f154a2b0597ae32/src/lib/es2024.arraybuffer.d.ts" />
-*/
 
 import process from "node:process";
 const runtime: string = navigator.userAgent;
