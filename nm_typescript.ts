@@ -1,17 +1,13 @@
 /*
-  #!/usr/bin/env -S /home/user/deno -A
-  #!/usr/bin/env -S /home/user/bun run
-  #!/usr/bin/env -S /home/user/node --experimental-transform-types
+  #!/usr/bin/env -S /home/user/deno
+  #!/usr/bin/env -S /home/user/bun
+  #!/usr/bin/env -S /home/user/node
 
   TypeScript Native Messaging host
   guest271314, 7-28-2024
 */
 
 // Source JavaScript: https://github.com/guest271314/NativeMessagingHosts/blob/main/nm_host.js
-//
-// Convert JavaScript to TypeScript, no obvious equivalent with tsc
-// https://www.codeconvert.ai/javascript-to-typescript-converter
-//
 // Resizable ArrayBuffer supported by tsc Version 5.7.0-dev.20241019
 
 import process from "node:process";
@@ -42,11 +38,11 @@ if (runtime.startsWith("Node")) {
 
 if (runtime.startsWith("Bun")) {
   // @ts-ignore Bun
-  readable = Bun.file("/dev/stdin").stream();
+  readable = Bun.file(0).stream();
   writable = new WritableStream<Uint8Array>({
     async write(value) {
       // @ts-ignore Bun
-      Bun.file("/dev/stdout")
+      Bun.file(1)
       .writer().write(value);
     },
   }, new CountQueuingStrategy({ highWaterMark: Infinity }));
@@ -85,7 +81,7 @@ async function* getMessage(): AsyncGenerator<Uint8Array> {
 
 async function sendMessage(message: Uint8Array): Promise<void> {
   await new Blob([
-    new Uint8Array(new Uint32Array([message.length]).buffer),
+    new Uint32Array([message.length]),
     message,
   ])
     .stream()
