@@ -46,7 +46,8 @@ if (runtime.startsWith("Bun")) {
   writable = new WritableStream<Uint8Array>({
     async write(value) {
       // @ts-ignore Bun
-      await Bun.write(Bun.stdout, value);
+      Bun.file("/dev/stdout")
+      .writer().write(value);
     },
   }, new CountQueuingStrategy({ highWaterMark: Infinity }));
   ({ exit } = process);
