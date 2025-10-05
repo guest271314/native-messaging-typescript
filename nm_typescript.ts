@@ -8,7 +8,6 @@
 */
 
 // Source JavaScript: https://github.com/guest271314/NativeMessagingHosts/blob/main/nm_host.js
-// Resizable ArrayBuffer supported by tsc Version 5.7.0-dev.20241019
 
 import process from "node:process";
 const runtime: string = navigator.userAgent;
