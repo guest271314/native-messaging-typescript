@@ -13,8 +13,8 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "target": "esnext",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "resolvePackageJsonExports": false,
     "resolvePackageJsonImports": false,
     "resolveJsonModule": false
