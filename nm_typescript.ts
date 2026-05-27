@@ -29,7 +29,7 @@ function encodeMessage(message: object): Uint8Array<ArrayBuffer> {
 
 async function* getMessage(): AsyncGenerator<Uint8Array<ArrayBuffer>> {
   for await (const data of stdin) {
-    const chunk: Uint8Array<ArrayBuffer> = data; // Ensure data is treated as U8
+    const chunk: Uint8Array<ArrayBuffer> = data;
     if (
       buffer.byteLength === 0 && totalMessageLength === 0 &&
       currentMessageLength === 0
