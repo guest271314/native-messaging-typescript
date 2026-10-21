@@ -4,7 +4,6 @@
 //! #!/usr/bin/env -S /home/user/bin/bun -b --expose-gc
 //! #!/usr/bin/env -S /home/user/bin/deno -A --v8-flags="--expose-gc"
 //! #!/usr/bin/env -S /home/user/bin/bun -b --expose-gc
-//! #!/usr/bin/env -S /home/user/bin/node --expose-gc
 //!
 //! Source JavaScript: https://github.com/guest271314/NativeMessagingHosts/blob/main/nm_host.js
 //! https://github.com/microsoft/TypeScript/issues/62546#issuecomment-3374526284
