@@ -12,29 +12,30 @@ import * as process from "node:process";
 
 declare function gc(): void;
 
-const stdin: NodeJS.ReadStream & { fd: 0 } = process.stdin;
-const stdout: NodeJS.WriteStream & { fd: 1 } = process.stdout;
+export const stdin: NodeJS.ReadStream & { fd: 0 } = process.stdin;
+export const stdout: NodeJS.WriteStream & { fd: 1 } = process.stdout;
 export const stderr: NodeJS.WriteStream & { fd: 2 } = process.stderr;
-const exit: (n: number) => void = process.exit;
-const buffer: ArrayBuffer = new ArrayBuffer(0, {
+export const exit: (n: number) => void = process.exit;
+export const buffer: ArrayBuffer = new ArrayBuffer(0, {
   maxByteLength: 1024 ** 2 * 64,
 });
-const encoder: TextEncoder = new TextEncoder();
-let totalMessageLength: number = 0;
-let currentMessageLength: number = 0;
+export const encoder: TextEncoder = new TextEncoder();
+export let totalMessageLength: number = 0;
+export let currentMessageLength: number = 0;
 
-function encodeMessage(message: object): Uint8Array<ArrayBuffer> {
+export function encodeMessage(message: object): Uint8Array<ArrayBuffer> {
   return encoder.encode(JSON.stringify(message));
 }
 
-async function* getMessage(): AsyncGenerator<Uint8Array<ArrayBuffer>> {
+export async function* getMessage(): AsyncGenerator<Uint8Array<ArrayBuffer>> {
   for await (const data of stdin) {
     const chunk: Uint8Array<ArrayBuffer> = data;
     if (
       buffer.byteLength === 0 && totalMessageLength === 0 &&
       currentMessageLength === 0
     ) {
-      totalMessageLength = chunk[3] << 24 | chunk[2] << 16 | chunk[1] << 8 | chunk[0];
+      totalMessageLength = chunk[3] << 24 | chunk[2] << 16 | chunk[1] << 8 |
+        chunk[0];
       (buffer as ArrayBuffer).resize(totalMessageLength);
       const message: Uint8Array<ArrayBuffer> = chunk.subarray(4);
       new Uint8Array(buffer).set(message, currentMessageLength);
@@ -64,7 +65,7 @@ async function* getMessage(): AsyncGenerator<Uint8Array<ArrayBuffer>> {
   }
 }
 
-function sendMessage(message: Uint8Array<ArrayBuffer>): void {
+export function sendMessage(message: Uint8Array<ArrayBuffer>): void {
   const COMMA: number = 44;
   const OPEN_BRACKET: number = 91;
   const CLOSE_BRACKET: number = 93;
@@ -148,12 +149,12 @@ function sendMessage(message: Uint8Array<ArrayBuffer>): void {
   }
 }
 
-async function main(): Promise<void> {
+export async function main(): Promise<void> {
   for await (const message of getMessage()) {
     sendMessage(message);
   }
 }
-
+// process.stderr.write(`${globalThis?.navigator?.userAgent} TypeScript Native Messaging host`);
 main().catch((e: Error) => {
   process.stderr.write(e.message);
   sendMessage(encodeMessage({ error: e.message }));
