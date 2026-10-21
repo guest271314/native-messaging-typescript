@@ -14,6 +14,7 @@ declare function gc(): void;
 
 const stdin: NodeJS.ReadStream & { fd: 0 } = process.stdin;
 const stdout: NodeJS.WriteStream & { fd: 1 } = process.stdout;
+export const stderr: NodeJS.WriteStream & { fd: 2 } = process.stderr;
 const exit: (n: number) => void = process.exit;
 const buffer: ArrayBuffer = new ArrayBuffer(0, {
   maxByteLength: 1024 ** 2 * 64,
@@ -154,6 +155,7 @@ async function main(): Promise<void> {
 }
 
 main().catch((e: Error) => {
+  process.stderr.write(e.message);
   sendMessage(encodeMessage({ error: e.message }));
   exit(1);
 });
